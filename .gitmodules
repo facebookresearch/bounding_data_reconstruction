@@ -1,0 +1,3 @@
+[submodule "fisher_information_loss"]
+	path = fisher_information_loss
+	url = git@github.com:facebookresearch/fisher_information_loss.git
