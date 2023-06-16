@@ -43,13 +43,13 @@ for i in range(args.num_trials):
     
     model = models.get_model("logistic")
     model.train(train_data, l2=args.lam, weights=None)
-    model.theta = model.theta + args.sigma * torch.randn_like(model.theta)
     # Renyi-DP accounting
     rdp_eps = 2 / (n * args.lam * args.sigma)
     # FIL accounting
     J = model.influence_jacobian(train_data)[:, :, :-1] / args.sigma
     etas = J.pow(2).sum(1).mean(1).sqrt()
     print(f"Trial {i+1:d}: RDP epsilon = {rdp_eps:.4f}, Max FIL eta = {etas.max():.4f}")
+    model.theta = model.theta + args.sigma * torch.randn_like(model.theta)
         
     all_etas.append(etas.detach().numpy())
     all_rdp_epsilons.append(rdp_eps)
