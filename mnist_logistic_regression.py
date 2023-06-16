@@ -44,7 +44,7 @@ for i in range(args.num_trials):
     model = models.get_model("logistic")
     model.train(train_data, l2=args.lam, weights=None)
     # Renyi-DP accounting
-    rdp_eps = 2 / (n * args.lam * args.sigma)
+    rdp_eps = 4 / (n * args.lam * args.sigma) ** 2
     # FIL accounting
     J = model.influence_jacobian(train_data)[:, :, :-1] / args.sigma
     etas = J.pow(2).sum(1).mean(1).sqrt()
